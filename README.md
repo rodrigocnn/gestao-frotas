@@ -1,24 +1,27 @@
-# README
+# 🚗 Sistema de Gestão de Frotas (API Rails)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este projeto é uma API desenvolvida em **Ruby on Rails 7.2**, com foco no gerenciamento de veículos, motoristas e viagens de frota. A API oferece endpoints RESTful para operações de CRUD, filtros dinâmicos e organização da estrutura de dados.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## 🧱 Tecnologias Utilizadas
 
-* System dependencies
+- Ruby 3.x
+- Rails 7.2 (API only)
+- PostgreSQL
+- FactoryBot (para seeds e testes)
+- RSpec (testes automatizados)
+- Faker (geração de dados realistas)
+- JSONB (colunas flexíveis)
+- Enum / Scopes / Callbacks do Active Record
 
-* Configuration
+---
 
-* Database creation
+## 📦 Instalação
 
-* Database initialization
+1. Clone o repositório:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+git clone https://github.com/seuusuario/sistema-frotas.git
+cd sistema-frotas
+```
