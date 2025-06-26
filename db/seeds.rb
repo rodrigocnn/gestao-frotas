@@ -1,9 +1,25 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+require "factory_bot_rails"
+require "faker"
+
+FactoryBot.definition_file_paths = [ File.expand_path("spec/factories", __dir__) ]
+FactoryBot.find_definitions
+
+include FactoryBot::Syntax::Methods
+
+
+puts "Criando Frotas"
+
+5.times do
+  create(:fleet)
+end
+
+puts "Criando Veículos"
+10.times { create(:vehicle) }
+
+puts "Criando Motoristas"
+5.times { create(:driver) }
+
+puts "Criando Viagens"
+3.times { create(:trip) }
+
+puts "Fim"
