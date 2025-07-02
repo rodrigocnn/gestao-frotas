@@ -11,6 +11,7 @@ gem "faker"
 gem "devise"
 gem "devise-jwt"
 gem "active_model_serializers", "~> 0.10.0"
+gem "sidekiq"
 
 
 group :development, :test do
