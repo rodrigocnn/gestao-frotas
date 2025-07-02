@@ -8,6 +8,9 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 gem "factory_bot_rails"
 gem "faker"
+gem "devise"
+gem "devise-jwt"
+gem "active_model_serializers", "~> 0.10.0"
 
 
 group :development, :test do
