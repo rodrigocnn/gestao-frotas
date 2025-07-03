@@ -1,39 +1,31 @@
-name: CI
+name: CI Testes com RSpec
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
+    branches: [develop] # Aqui está correto, sem espaço entre [ e develop ]
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
+  scan_ruby: # O nome do job pode ser qualquer coisa, scan_ruby está ótimo
+    runs-on: ubuntu-latest # runner Linux recente
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Versão 4 está ok (é a mais recente)
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          ruby-version: .ruby-version # vai pegar a versão do arquivo .ruby-version
+          bundler-cache: true # cache do bundler para acelerar builds
+
+      - name: Install dependencies
+        run: bundle install --with development test
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Verificar estilo com RuboCop
+        run: bundle exec rubocop
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
-
+      - name: Rodar testes com RSpec
+        run: bundle exec rspec
