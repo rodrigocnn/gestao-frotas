@@ -2,24 +2,45 @@ name: CI Testes com RSpec
 
 on:
   push:
-    branches: [develop] # Aqui está correto, sem espaço entre [ e develop ]
+    branches: [develop]
 
 jobs:
-  scan_ruby: # O nome do job pode ser qualquer coisa, scan_ruby está ótimo
-    runs-on: ubuntu-latest # runner Linux recente
+  scan_ruby:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test_database
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Versão 4 está ok (é a mais recente)
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: .ruby-version # vai pegar a versão do arquivo .ruby-version
-          bundler-cache: true # cache do bundler para acelerar builds
+          ruby-version: .ruby-version
+          bundler-cache: true
 
       - name: Install dependencies
         run: bundle install --with development test
+
+      - name: Setup DB config
+        run: cp config/database.yml.github_actions config/database.yml
+
+      - name: Prepare database
+        run: bundle exec rails db:create db:migrate RAILS_ENV=test
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
