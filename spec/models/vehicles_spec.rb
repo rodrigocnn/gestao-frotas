@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 
-RSpec.describe "Vehicles API", type: :model do
+RSpec.describe "Vehicles Models", type: :model do
     it "should create a vehicle with all attributes" do
       vehicle = create(:vehicle)
       expect(vehicle).to be_valid
@@ -29,30 +29,30 @@ RSpec.describe "Vehicles API", type: :model do
     end
 
 
-      context "Validations" do
-        it "does not allow blank plate" do
-          vehicle = build(:vehicle, plate: "")
-          expect(vehicle).to_not be_valid
-        end
-
-        it "does not allow blank brand" do
-          vehicle = build(:vehicle, brand: "")
-          expect(vehicle).to_not be_valid
-        end
-
-        it "does not allow blank year" do
-          vehicle = build(:vehicle, year: "")
-          expect(vehicle).to_not be_valid
-        end
-
-        it "does not allow blank year" do
-          vehicle = build(:vehicle, status: "")
-          expect(vehicle).to_not be_valid
-        end
-
-        it "does not allow blank fleet" do
-          vehicle = build(:vehicle, fleet: nil)
-          expect(vehicle).to_not be_valid
-        end
+    context "Validations" do
+      it "does not allow blank plate" do
+        vehicle = build(:vehicle, plate: "")
+        expect(vehicle).to_not be_valid
       end
+
+      it "does not allow blank brand" do
+        vehicle = build(:vehicle, brand: "")
+        expect(vehicle).to_not be_valid
+      end
+
+      it "does not allow blank year" do
+        vehicle = build(:vehicle, year: "")
+        expect(vehicle).to_not be_valid
+      end
+
+      it "does not allow blank year" do
+        vehicle = build(:vehicle, status: "")
+        expect(vehicle).to_not be_valid
+      end
+
+      it "does not allow blank fleet" do
+        vehicle = build(:vehicle, fleet: nil)
+        expect(vehicle).to_not be_valid
+      end
+    end
 end
