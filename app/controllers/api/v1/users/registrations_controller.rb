@@ -6,7 +6,7 @@ module Api
 
         def create
           build_resource(sign_up_params)
-
+          resource.role = "staff"  # define role manualmente
           resource.save
           if resource.persisted?
             render json: { message: "Usuário registrado com sucesso.", user: resource }, status: :ok
@@ -18,7 +18,7 @@ module Api
         private
 
         def sign_up_params
-          params.require(:user).permit(:email, :password, :password_confirmation, :role)
+          params.require(:user).permit(:email, :password, :password_confirmation)
         end
       end
     end
