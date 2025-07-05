@@ -50,3 +50,6 @@ jobs:
 
       - name: Rodar testes com RSpec
         run: bundle exec rspec
+        env:
+          RAILS_ENV: test
+          DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
