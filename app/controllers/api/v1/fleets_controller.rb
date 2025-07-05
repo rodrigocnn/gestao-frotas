@@ -2,6 +2,7 @@ module Api
   module V1
     class FleetsController < ApplicationController
       before_action :set_fleet, only: [ :show, :update, :destroy ]
+      before_action :authenticate_user!, only: [ :index,  :create, :update, :destroy ]
 
       def index
         @fleets = Fleet.all
@@ -23,15 +24,16 @@ module Api
 
       def update
         if @fleet.update(fleet_params)
-          render json: @fleet
+          render json: @fleet, status: :ok
         else
           render json: @fleet.errors, status: :unprocessable_entity
         end
       end
 
       def destroy
-      @fleet.destroy
-      head :no_content
+        authorize @fleet  # Isso chama FleetPolicy#destroy?
+        @fleet.destroy
+        head :no_content
       end
 
       def get_all_vehicles_by_fleet
