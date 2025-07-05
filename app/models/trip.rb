@@ -2,7 +2,7 @@ class Trip < ApplicationRecord
   belongs_to :driver
   belongs_to :vehicle
 
-  enum status: { planejada: 1, em_andamento: 2, finalizada: 3 }
+  enum :status, { planejada: 1, em_andamento: 2, finalizada: 3 }
 
   before_validation :ensure_vehicle_is_available
 
