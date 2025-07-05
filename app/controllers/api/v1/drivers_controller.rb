@@ -1,7 +1,8 @@
 module Api
   module V1
     class DriversController < ApplicationController
-          before_action :set_driver, only: [ :show, :update, :destroy ]
+        before_action :set_driver, only: [ :show, :update, :destroy ]
+
         def index
           @drivers = Driver.all
           render json: @drivers
@@ -20,7 +21,7 @@ module Api
             render json: @driver
           end
 
-          def update
+        def update
           if @driver.update(driver_params)
             render json: @driver
           else
@@ -40,7 +41,7 @@ module Api
         end
 
         def driver_params
-          params.require(:driver).permit(:name, :cpf)
+          params.require(:driver).permit(:name, :cpf, :cnh, :phone)
         end
     end
   end
