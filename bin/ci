@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+echo "🔍 Running RSpec tests..."
+bundle exec rspec
+
+echo "🛡️  Running Brakeman security scanner..."
+bundle exec brakeman -A -z
+
+echo "🧹 Running RuboCop code style checks..."
+bundle exec rubocop
+
+echo "✅ All checks passed successfully!"
