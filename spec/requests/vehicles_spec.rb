@@ -23,6 +23,17 @@ RSpec.describe "Vehicles API", type: :request do
             fleet: fleet
           )
     end
+
+    it "returns a list of vehicles" do
+      get "/api/v1/vehicles"
+
+      expect(response).to have_http_status(:ok)
+
+      json = JSON.parse(response.body)
+      expect(json).to be_an(Array)
+      expect(json.size).to eq(2)
+      expect(json[0]).to include("brand" => "Toyota")
+    end
     it "should create a new vehicle correctly" do
       fleet = Fleet.create!(name: "Frota Y")
 
@@ -44,15 +55,34 @@ RSpec.describe "Vehicles API", type: :request do
       expect(json["plate"]).to eq("XYZ5644")
     end
 
-      it "returns a list of vehicles" do
-        get "/api/v1/vehicles"
+    it "should put a new vehicle correctly" do
+      fleet = Fleet.create!(name: "Frota Y")
+      @vehicle = create(:vehicle)
 
-        expect(response).to have_http_status(:ok)
+      put "/api/v1/vehicles/#{@vehicle.id}", params: {
+        vehicle: {
+          plate: "XYZ5690",
+          brand: "Toyota",
+          model: "Corola",
+          year: 2021,
+          status: "em_uso",
+          fleet_id: fleet.id
+        }
+      }
 
-        json = JSON.parse(response.body)
-        expect(json).to be_an(Array)
-        expect(json.size).to eq(2)
-        expect(json[0]).to include("brand" => "Toyota")
-      end
+      expect(response).to have_http_status(:ok)
+
+      json = JSON.parse(response.body)
+      expect(json["brand"]).to eq("Toyota")
+      expect(json["plate"]).to eq("XYZ5690")
+    end
+
+   it "should deletes the vehicle" do
+        vehicle =create(:vehicle)
+        delete "/api/v1/vehicles/#{vehicle.id}", headers: auth_headers(@user)
+
+        expect(response).to have_http_status(:no_content)
+        expect(Vehicle.exists?(vehicle.id)).to be_falsey
+    end
   end
 end
