@@ -1,6 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'factory_bot_rails'
+require 'simplecov'
+
+SimpleCov.start 'rails' # usa configuração padrão para Rails
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
