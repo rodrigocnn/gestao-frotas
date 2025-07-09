@@ -8,6 +8,7 @@ module Api
         @trips =  Trip.all
         render json: @trips
       end
+
       def create
         @trip = Trip.new(trip_params)
         if @trip.save
