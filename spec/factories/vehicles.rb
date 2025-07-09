@@ -4,7 +4,7 @@ FactoryBot.define do
     brand { Faker::Vehicle.manufacture }
     model { Faker::Vehicle.model }
     year { rand(2010..2023) }
-    status { "disponivel" }
+    status { :disponivel }
     fleet_id { Fleet.pluck(:id).sample || create(:fleet).id } # pega um fleet_id existente ou cria um novo
   end
 end
