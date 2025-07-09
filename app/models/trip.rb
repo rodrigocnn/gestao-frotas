@@ -4,13 +4,11 @@ class Trip < ApplicationRecord
 
   enum :status, { planejada: 1, em_andamento: 2, finalizada: 3 }
 
-  before_validation :ensure_vehicle_is_available
-
+  before_create :ensure_vehicle_is_available
   after_create :set_vehicle_status_em_uso
   after_update :set_vehicle_status_disponivel_if_finalized
 
   validates :start_date, :end_date, :origin, :destination, :status, presence: true
-
   scope :filter_by_status, ->(status_value) { where(status: status_value) }
 
   private
